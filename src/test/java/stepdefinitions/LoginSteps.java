@@ -23,7 +23,7 @@ public class LoginSteps {
 
     @When("user enters username and password")
     public void user_enters_credentials() {
-        loginPage.login("standard_user", "wrong_password");
+        loginPage.login("standard_user", "secret_sauce");
     }
 
     @Then("user should be logged in")
