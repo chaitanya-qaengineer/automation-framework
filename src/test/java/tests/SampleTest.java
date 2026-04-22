@@ -1,26 +1,38 @@
 package tests;
 
 import org.openqa.selenium.WebDriver;
-import org.testng.annotations.Test;
+import org.testng.Assert;
+import org.testng.annotations.*;
 
 import pages.LoginPage;
 import utils.DriverFactory;
 
 public class SampleTest {
 
+    WebDriver driver;
+    LoginPage loginPage;
+
+    @BeforeMethod
+    public void setup() {
+        driver = DriverFactory.getDriver();
+        driver.get("https://www.saucedemo.com");
+        loginPage = new LoginPage(driver);
+    }
+
     @Test
     public void loginTest() {
 
-        WebDriver driver = DriverFactory.getDriver();
-
-        driver.get("https://www.saucedemo.com");
-
-        LoginPage loginPage = new LoginPage(driver);
-
         loginPage.login("standard_user", "secret_sauce");
 
-        System.out.println("Login attempted");
+        // Validation
+        Assert.assertTrue(driver.getCurrentUrl().contains("inventory"),
+                "Login failed");
 
+        System.out.println("Login successful");
+    }
+
+    @AfterMethod
+    public void teardown() {
         DriverFactory.quitDriver();
     }
 }
